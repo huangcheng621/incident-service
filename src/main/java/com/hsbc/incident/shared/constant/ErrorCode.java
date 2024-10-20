@@ -1,5 +1,8 @@
 package com.hsbc.incident.shared.constant;
 
+import com.hsbc.incident.config.MessageSourceFactory;
+import com.hsbc.incident.domain.context.GlobalContext;
+
 public enum ErrorCode {
 
     INVALID_REQUEST,
@@ -12,6 +15,8 @@ public enum ErrorCode {
     UNKNOWN;
 
     public String getDescription() {
-        return this.name();
+        String messageKey = "errorcode." + this.name().toLowerCase();
+        return MessageSourceFactory.getErrorMessageSource().getMessage(
+            messageKey, null, GlobalContext.getLocale());
     }
 }
