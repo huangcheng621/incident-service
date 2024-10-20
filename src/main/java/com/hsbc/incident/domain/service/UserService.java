@@ -10,14 +10,10 @@ import com.hsbc.incident.shared.utils.DateUtils;
 import com.hsbc.incident.shared.utils.JwtUtils;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Optional;
-import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -46,18 +42,6 @@ public class UserService {
 
     public Long validateToken(String token) {
         return JwtUtils.getUserIdFromToken(token);
-    }
-
-    public Optional<Long> getLoginUserIdFromContext() {
-        ServletRequestAttributes servletRequestAttributes =
-            (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        if (servletRequestAttributes != null) {
-            HttpServletRequest request = servletRequestAttributes.getRequest();
-            return Optional.ofNullable(
-                (Long) request.getAttribute(CommonConstant.CONTEXT_LOGIN_USER_ID));
-        } else {
-            return Optional.empty();
-        }
     }
 
     public User getUserById(Long id) {

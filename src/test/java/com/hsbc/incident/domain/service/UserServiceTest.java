@@ -16,7 +16,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.context.request.RequestContextHolder;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
@@ -76,14 +75,6 @@ class UserServiceTest {
         BusinessException exception = assertThrows(BusinessException.class,
             () -> userService.validateToken(invalidToken));
         Assertions.assertThat(exception.getErrorCode()).isEqualTo(ErrorCode.INVALID_TOKEN);
-    }
-
-    // Test should return an empty Optional when request attributes are null.
-    @Test
-    void shouldReturnEmptyOptionalWhenRequestAttributesNull() {
-        RequestContextHolder.setRequestAttributes(null);
-
-        Assertions.assertThat(userService.getLoginUserIdFromContext()).isEmpty();
     }
 
     // Test should return the user when the user exists by ID.
