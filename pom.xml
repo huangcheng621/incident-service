@@ -177,7 +177,14 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <!-- Configuration for the check goal -->
+                    <includes>
+                        <include>com/hsbc/incident/api/controller/**</include>
+                        <include>com/hsbc/incident/domain/service/**</include>
+                        <include>com/hsbc/incident/shared/utils/**</include>
+                    </includes>
+                    <excludes>
+                        <exclude>com/hsbc/incident/shared/utils/SpringUtils**</exclude>
+                    </excludes>
                     <rules>
                         <rule>
                             <element>PACKAGE</element>
