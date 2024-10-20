@@ -16,6 +16,7 @@
         <logback.version>1.2.3</logback.version>
         <lombok.version>1.18.20</lombok.version>
         <mapstruct.version>1.5.3.Final</mapstruct.version>
+        <jacoco.version>0.8.3</jacoco.version>
     </properties>
 
     <dependencies>
@@ -123,7 +124,11 @@
             <version>${springboot.version}</version>
             <optional>true</optional>
         </dependency>
-        <!-- Other dependencies as needed -->
+        <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>${jacoco.version}</version>
+        </dependency>
     </dependencies>
 
 
@@ -148,6 +153,35 @@
                             <version>${mapstruct.version}</version>
                         </path>
                     </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                            <goal>report</goal>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- Configuration for the check goal -->
+                    <rules>
+                        <rule>
+                            <element>PACKAGE</element>
+                            <limits>
+                                <limit>
+                                    <counter>LINE</counter>
+                                    <value>COVEREDRATIO</value>
+                                    <minimum>0.80</minimum> <!-- Example threshold -->
+                                </limit>
+                            </limits>
+                        </rule>
+                    </rules>
                 </configuration>
             </plugin>
         </plugins>
